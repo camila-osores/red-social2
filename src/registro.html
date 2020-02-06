@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Red social</title>
+    <!-- Tipografìa Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="login">
+            <h1>Registrarse</h1>
+            <input class="datos" type="text" placeholder="Nombre">
+            <input class="datos" type="text" placeholder="Apellido">
+            <input class="datos" type="email" placeholder="Correo electrónico">
+            <input class="datos" type="password" placeholder="Contraseña">
+            <button class="btn1">Ingresar</button>
+        </div>
+
+    </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAPKMLev2jzN-YE1uGAuA0G4w_dm5_YI3s",
+            authDomain: "red-social-ea076.firebaseapp.com",
+            databaseURL: "https://red-social-ea076.firebaseio.com",
+            projectId: "red-social-ea076",
+            storageBucket: "red-social-ea076.appspot.com",
+            messagingSenderId: "847038144294",
+            appId: "1:847038144294:web:81e58c81fdda96fb5f2be7",
+            measurementId: "G-0GYWC4N9NV"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
