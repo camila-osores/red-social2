@@ -74,9 +74,19 @@ h1{
     text-decoration: none;
 }
 
-/* caja home */
-.caja{
-    width: 50%;
-    height: 50px;
-    background-color:  red;
+.post{
+    margin-top: 50px;
+}
+
+.btn-cerrar{
+    float: right;
+    color: white;
+    background-color: blue;
+    border-radius: 5px;
+    width: 120px;
+    height: 40px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }

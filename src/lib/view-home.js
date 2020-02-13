@@ -1,8 +1,10 @@
-export const home= () =>{
-  return`
+export function home() {
+    return `
     <div class="container">
-        <div class="caja">
-            <p>hola mundo</p>
-        </div>
+        <textarea class="post" name="" id="" cols="50" rows="8"></textarea>
+        <button id="btn-publicar">publicar</button>
+        <button id="btn-cerrar">cerrar sesión</button>
     </div>`
-};
+
+
+}
