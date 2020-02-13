@@ -27,7 +27,7 @@ function observador() {
             root.innerHTML = `${home()}`;
             var anonymous = user.isAnonymous;
             var uid = user.uid;
-            console.log("Existe usuario activo")
+            console.log("Existe usuario activo");
             document.getElementById('btn-cerrar').addEventListener("click", cerrar)
 
         } else {
@@ -44,7 +44,7 @@ observador();
 // Funcion para cerrar sesión
 let cerrar = () => {
     firebase.auth().signOut().then(function() {
-        // Sign-out successful.
+        console.log("Has cerrado sesión")
     }).catch(function(error) {
         // An error happened.
     });
@@ -68,6 +68,10 @@ let regis = () => {
 
         // verificación de registro de usuario
         firebase.auth().createUserWithEmailAndPassword(email1, pass1)
+            .then(function() {
+                verificar()
+                cerrar()
+            })
             .catch(function(error) {
                 let errorCode = error.code;
                 let errorMessage = error.message;
@@ -75,5 +79,18 @@ let regis = () => {
                 console.log("No ingresaste tu contraseña");
             });
 
+
+
     });
 };
+
+function verificar() {
+    let user = firebase.auth().currentUser;
+
+    user.sendEmailVerification()
+        .then(function() {
+            console.log("Enviando correo");
+        }).catch(function(error) {
+            console.log(error);
+        });
+}
