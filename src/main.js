@@ -2,7 +2,8 @@ import { ingreso } from './lib/view-login.js';
 import { registro } from './lib/view-registro.js';
 import { home } from './lib/view-home.js';
 
-let root = document.getElementById('root')
+let root = document.getElementById('root');
+
 
 function iniciar() {
     // se extraen los datos de los input de login
@@ -15,10 +16,34 @@ function iniciar() {
     .catch(function(error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode, "/No ingresaste tu correo electrónico");
-        console.log(errorMessage, "/No ingresaste tu contraseña");
+        console.log("No ingresaste tu correo electrónico");
+        console.log("No ingresaste tu contraseña");
     });
 }
+
+
+function inicioGoogle() {
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+        .then(function(result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            // ...
+        })
+        .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+}
+
 
 // Determina si el usuario está activo o no
 function observador() {
@@ -32,6 +57,8 @@ function observador() {
 
         } else {
             root.innerHTML = (ingreso());
+            document.getElementById('google').addEventListener("click", inicioGoogle);
+            console.log("hace click boton google")
             let ingresar = document.getElementById("ingresar");
             ingresar.addEventListener("click", iniciar)
             console.log("No existe usuario activo");
@@ -43,15 +70,13 @@ observador();
 
 // Funcion para cerrar sesión
 let cerrar = () => {
-    firebase.auth().signOut().then(function() {
-        console.log("Has cerrado sesión")
-    }).catch(function(error) {
-        // An error happened.
-    });
+    firebase.auth().signOut()
+        .then(function() {
+            console.log("Has cerrado sesión")
+        }).catch(function(error) {
+            // An error happened.
+        });
 }
-
-// se muestra página de registro a través de html dinámico
-// console.log(document.getElementById('aqui'))
 
 let regis = () => {
     root.innerHTML = registro();
@@ -84,9 +109,9 @@ let regis = () => {
     });
 };
 
+// Verificamos a través de correo electrónico si el usuario quedó registrado
 function verificar() {
     let user = firebase.auth().currentUser;
-
     user.sendEmailVerification()
         .then(function() {
             console.log("Enviando correo");
