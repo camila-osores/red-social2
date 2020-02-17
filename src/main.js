@@ -49,6 +49,7 @@ function observador() {
             document.getElementById('btn-publicar').addEventListener("click", publicar)
             console.log("funciona boton publicar");
             document.getElementById('btn-cerrar').addEventListener("click", cerrar)
+            leer_datos();
 
         } else {
             root.innerHTML = (ingreso());
@@ -119,18 +120,43 @@ let db = firebase.firestore();
 //Agregar datos a firestore
 function publicar() {
     let post = document.getElementById('post-area').value;
+    let cat = document.getElementById('categoria').value;
+    if (post) {
+        db.collection("post").add({
+                posteo: post,
+                categoria: cat
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                document.getElementById('post-area').value = ' ';
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+    }
 
-    db.collection("post").add({
-            posteo: post,
-            // last: "Lovelace",
-            // born: 1815
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            document.getElementById('post-area').value = ' ';
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
 }
-publicar();
+
+
+//Leer datos
+function leer_datos() {
+    let post2 = document.getElementById('posteos')
+    db.collection("post").onSnapshot((querySnapshot) => {
+
+        querySnapshot.forEach((doc) => {
+            console.log(doc);
+            post2.innerHTML += `
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="post-area2" cols="50" rows="8">${doc.data().posteo}</textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar" class="btns">Editar</button>
+                <button id="btn-eliminar" class="btns">Eliminar</button>
+            </div>
+        </div>
+        `
+        });
+    });
+
+}
