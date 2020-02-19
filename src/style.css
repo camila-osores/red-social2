@@ -176,6 +176,7 @@ header label .icono:hover {
     width: 90px;
     height: 40px;
     cursor: pointer;
+    margin: 0 4% 0 4%;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;

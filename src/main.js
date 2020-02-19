@@ -46,10 +46,19 @@ function observador() {
             var anonymous = user.isAnonymous;
             var uid = user.uid;
             console.log("Existe usuario activo");
+
+            //Botón publicar post
             document.getElementById('btn-publicar').addEventListener("click", publicar)
             console.log("funciona boton publicar");
-            document.getElementById('btn-cerrar').addEventListener("click", cerrar)
+
+            //Función leer datos
             leer_datos();
+
+            //Botón cerrar sesión
+            document.getElementById('btn-cerrar').addEventListener("click", cerrar)
+
+
+
 
         } else {
             root.innerHTML = (ingreso());
@@ -68,7 +77,7 @@ observador();
 let cerrar = () => {
     firebase.auth().signOut()
         .then(function() {
-            console.log("Has cerrado sesión")
+            console.log("Cerrar sesión")
         }).catch(function(error) {});
 }
 
@@ -97,9 +106,6 @@ let regis = () => {
                 console.log("No ingresaste tu correo electrónico");
                 console.log("No ingresaste tu contraseña");
             });
-
-
-
     });
 };
 
@@ -114,10 +120,10 @@ function verificar() {
         });
 }
 
-// Initialize Cloud Firestore through Firebase
+// Inicializando Firestore
 let db = firebase.firestore();
 
-//Agregar datos a firestore
+//Agregar datos a colección de firestore
 function publicar() {
     let post = document.getElementById('post-area').value;
     let cat = document.getElementById('categoria').value;
@@ -134,28 +140,50 @@ function publicar() {
                 console.error("Error adding document: ", error);
             });
     }
-
 }
-
 
 //Leer datos
 function leer_datos() {
-    let post2 = document.getElementById('posteos')
+    let post2 = document.getElementById('posteos');
     db.collection("post").onSnapshot((querySnapshot) => {
+        post2.innerHTML = " ";
 
         querySnapshot.forEach((doc) => {
-            console.log(doc);
+            // console.log(doc);
             post2.innerHTML += `
             <!------------ Post dinámico ----------->
         <div>
-            <textarea class="post" id="post-area2" cols="50" rows="8">${doc.data().posteo}</textarea>
+            <textarea class="post" id="post-area2" cols="50" rows="8">${doc.data().posteo} </textarea>
             <div class="btns-container">
                 <button id="btn-megusta" class="btns">Me gusta</button>
                 <button id="btn-editar" class="btns">Editar</button>
-                <button id="btn-eliminar" class="btns">Eliminar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
             </div>
         </div>
         `
+                //Reconoce botón eliminar
+            window.addEventListener("click", botones)
+
+
+            function botones(e) {
+                let id = `${doc.id}`;
+                let btn = e.target.textContent;
+
+                if (e.target.type === "submit" && e.target.textContent === "Eliminar") {
+                    console.log(e.target.value)
+
+                    //Borrar datos
+                    function eliminar(id) {
+
+                        db.collection("post").doc(id).delete().then(function() {
+                            console.log("Document successfully deleted!");
+                        }).catch(function(error) {
+                            console.error("Error removing document: ", error);
+                        });
+                    }
+                    eliminar(id);
+                }
+            }
         });
     });
 
