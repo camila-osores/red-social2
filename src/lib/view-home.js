@@ -13,11 +13,11 @@ export function home() {
 
             <nav class="menu">
                 <ul>
-                    <li><a href="">Inicio</a></li>
-                    <li><a href="">Computación</a></li>
-                    <li><a href="">Videojuegos</a></li>
-                    <li><a href="">Celulares</a></li>
-                    <li><a href="">Accesorios</a></li>
+                    <li><a href="#" id="inicio">Inicio</a></li>
+                    <li><a href="#" id="computacion">Computación</a></li>
+                    <li><a href="#" id="videojuegos">Videojuegos</a></li>
+                    <li><a href="#" id="celulares">Celulares</a></li>
+                    <li><a href="#" id="accesorios">Accesorios</a></li>
                     <li id="btn-cerrar"><a href="">Cerrar sesión</a></li>
                 </ul>
             </nav>

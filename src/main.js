@@ -14,6 +14,7 @@ function iniciar() {
     firebase.auth().signInWithEmailAndPassword(email2, pass2)
 
     .catch(function(error) {
+        alert("No ingresaste los datos correctamente, porfavor asegurate de llenar los dos campos")
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log("No ingresaste tu correo electrónico");
@@ -101,6 +102,7 @@ let regis = () => {
                 cerrar()
             })
             .catch(function(error) {
+                alert("No ingresaste los datos para tu registro, porfavor llena los campos vacíos")
                 let errorCode = error.code;
                 let errorMessage = error.message;
                 console.log("No ingresaste tu correo electrónico");
@@ -145,15 +147,18 @@ function publicar() {
 //Leer datos
 function leer_datos() {
     let post2 = document.getElementById('posteos');
+
+
     db.collection("post").onSnapshot((querySnapshot) => {
         post2.innerHTML = " ";
 
         querySnapshot.forEach((doc) => {
-            // console.log(doc);
+            console.log(doc.data().categoria);
+
             post2.innerHTML += `
             <!------------ Post dinámico ----------->
         <div>
-            <textarea class="post" id="post-area2" cols="50" rows="8">${doc.data().posteo} </textarea>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
             <div class="btns-container">
                 <button id="btn-megusta" class="btns">Me gusta</button>
                 <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
@@ -161,7 +166,8 @@ function leer_datos() {
             </div>
         </div>
         `
-                //Reconoce botón eliminar
+
+            //Reconocer botón eliminar
             window.addEventListener("click", botones)
 
             function botones(e) {
@@ -192,14 +198,14 @@ function leer_datos() {
 
             function botones2(e) {
 
-
+                // console.log(id)
                 if (e.target.type === "submit" && e.target.textContent === "Editar" && e.target.id === `btn-editar-${doc.id}`) {
+                    document.getElementById(doc.id).disabled = false;
+                    let id = doc.id
+                        //Editar post
+                    function editar() {
 
-
-                    //Editar post
-                    function editar(id) {
-
-                        document.getElementById('posteos').value = id;
+                        document.getElementById('posteos').value = doc.id;
                         console.log(posteos)
                         let guardar = document.getElementById(`btn-editar-${doc.id}`);
                         console.log(guardar)
@@ -208,12 +214,14 @@ function leer_datos() {
 
                         document.getElementById(`btn-editar-${doc.id}`).
                         addEventListener("click", () => {
-                            // let id = `${doc.id}`;
+                            // id = doc.id;
                             let publicacion = db.collection("post").doc(id);
+                            // console.log(publicacion)
 
+                            let post = document.getElementById(`${doc.id}`).value;
+                            console.log(post)
 
-                            let id = document.getElementById('posteos').value;
-                            console.log(id)
+                            let cat = doc.data().categoria;
 
                             return publicacion.update({
                                     posteo: post,
@@ -221,7 +229,6 @@ function leer_datos() {
                                 })
                                 .then(function() {
                                     guardar.innerHTML = 'Editar';
-                                    document.getElementById('posteos').value = ' ';
                                     console.log("El post se ha actualizado con éxito!");
                                 })
                                 .catch(function(error) {
@@ -232,13 +239,155 @@ function leer_datos() {
 
                     }
                     editar();
-
-
                 }
             }
 
-
         });
+
+
+
+        // BOTON INICIO 
+        document.getElementById("inicio").addEventListener("click", (e) => {
+            // e.preventDefault();
+
+            post2.innerHTML = "";
+            console.log("funciona")
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().categoria);
+
+                post2.innerHTML += `
+
+                    
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
+            </div>
+        </div>
+        `
+
+
+            })
+        })
+
+
+        // BOTON CATEGORIA COMPUTACION 
+        document.getElementById("computacion").addEventListener("click", (e) => {
+            // e.preventDefault();
+            post2.innerHTML = "";
+            console.log("funciona")
+
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().categoria);
+                if (doc.data().categoria === "computacion") {
+                    post2.innerHTML += `
+
+                    
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
+            </div>
+        </div>
+        `
+                }
+
+            })
+        })
+
+
+        // BOTON CATEGORIA VIDEOJUEGOS 
+        document.getElementById("videojuegos").addEventListener("click", (e) => {
+            // e.preventDefault();
+
+            post2.innerHTML = "";
+            console.log("funciona")
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().categoria);
+                if (doc.data().categoria === "videojuegos") {
+                    post2.innerHTML += `
+
+                    
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
+            </div>
+        </div>
+        `
+                }
+
+            })
+        })
+
+
+        // BOTON CATEGORIA CELULARES 
+        document.getElementById("celulares").addEventListener("click", (e) => {
+            // e.preventDefault();
+
+            post2.innerHTML = "";
+            console.log("funciona")
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().categoria);
+                if (doc.data().categoria === "celulares") {
+                    post2.innerHTML += `
+
+                    
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
+            </div>
+        </div>
+        `
+                }
+
+            })
+        })
+
+
+        // BOTON CATEGORIA ACCESORIOS 
+        document.getElementById("accesorios").addEventListener("click", (e) => {
+            // e.preventDefault();
+
+            post2.innerHTML = "";
+            console.log("funciona")
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().categoria);
+                if (doc.data().categoria === "accesorios") {
+                    post2.innerHTML += `
+
+                    
+            <!------------ Post dinámico ----------->
+        <div>
+            <textarea class="post" id="${doc.id}" cols="50" rows="8" disabled="disabled">${doc.data().posteo} </textarea>
+            <div class="btns-container">
+                <button id="btn-megusta" class="btns">Me gusta</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
+                <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
+            </div>
+        </div>
+        `
+                }
+
+            })
+        })
+
+
+
+
     });
 
 }
