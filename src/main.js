@@ -191,7 +191,7 @@ function leer_datos() {
             console.log("funciona boton editar")
 
             function botones2(e) {
-                // let id = `${doc.id}`;
+
 
                 if (e.target.type === "submit" && e.target.textContent === "Editar" && e.target.id === `btn-editar-${doc.id}`) {
 
@@ -204,15 +204,16 @@ function leer_datos() {
                         let guardar = document.getElementById(`btn-editar-${doc.id}`);
                         console.log(guardar)
                         guardar.innerHTML = 'Guardar';
-                        console.log(guardar)
 
-                        document.getElementById(`btn-editar-${doc.id}`).addEventListener("click", () => {
+
+                        document.getElementById(`btn-editar-${doc.id}`).
+                        addEventListener("click", () => {
+                            // let id = `${doc.id}`;
+                            let publicacion = db.collection("post").doc(id);
+
 
                             let id = document.getElementById('posteos').value;
                             console.log(id)
-
-                            let publicacion = db.collection("post").doc(id);
-                            console.log(publicacion)
 
                             return publicacion.update({
                                     posteo: post,
@@ -220,6 +221,7 @@ function leer_datos() {
                                 })
                                 .then(function() {
                                     guardar.innerHTML = 'Editar';
+                                    document.getElementById('posteos').value = ' ';
                                     console.log("El post se ha actualizado con éxito!");
                                 })
                                 .catch(function(error) {
