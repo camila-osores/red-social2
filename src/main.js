@@ -156,7 +156,7 @@ function leer_datos() {
             <textarea class="post" id="post-area2" cols="50" rows="8">${doc.data().posteo} </textarea>
             <div class="btns-container">
                 <button id="btn-megusta" class="btns">Me gusta</button>
-                <button id="btn-editar" class="btns">Editar</button>
+                <button id="btn-editar-${doc.id}" class="btns" value =${doc.id}>Editar</button>
                 <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
             </div>
         </div>
@@ -164,19 +164,17 @@ function leer_datos() {
                 //Reconoce botón eliminar
             window.addEventListener("click", botones)
 
-
             function botones(e) {
+
                 let id = `${doc.id}`;
-                let btn = e.target.textContent;
 
-                if (e.target.type === "submit" && e.target.textContent === "Eliminar") {
-                    console.log(e.target.value)
+                if (e.target.type === "submit" && e.target.textContent === "Eliminar" && e.target.id === `btn-eliminar-${doc.id}`) {
 
-                    //Borrar datos
+                    //Borrar post
                     function eliminar(id) {
 
                         db.collection("post").doc(id).delete().then(function() {
-                            console.log("Document successfully deleted!");
+                            console.log("El post se ha eliminado con éxito!");
                         }).catch(function(error) {
                             console.error("Error removing document: ", error);
                         });
@@ -184,6 +182,60 @@ function leer_datos() {
                     eliminar(id);
                 }
             }
+
+
+
+
+            //Reconocer botón editar
+            window.addEventListener("click", botones2)
+            console.log("funciona boton editar")
+
+            function botones2(e) {
+                // let id = `${doc.id}`;
+
+                if (e.target.type === "submit" && e.target.textContent === "Editar" && e.target.id === `btn-editar-${doc.id}`) {
+
+
+                    //Editar post
+                    function editar(id) {
+
+                        document.getElementById('posteos').value = id;
+                        console.log(posteos)
+                        let guardar = document.getElementById(`btn-editar-${doc.id}`);
+                        console.log(guardar)
+                        guardar.innerHTML = 'Guardar';
+                        console.log(guardar)
+
+                        document.getElementById(`btn-editar-${doc.id}`).addEventListener("click", () => {
+
+                            let id = document.getElementById('posteos').value;
+                            console.log(id)
+
+                            let publicacion = db.collection("post").doc(id);
+                            console.log(publicacion)
+
+                            return publicacion.update({
+                                    posteo: post,
+                                    categoria: cat
+                                })
+                                .then(function() {
+                                    guardar.innerHTML = 'Editar';
+                                    console.log("El post se ha actualizado con éxito!");
+                                })
+                                .catch(function(error) {
+                                    // The document probably doesn't exist.
+                                    console.error("Error updating document: ", error);
+                                });
+                        })
+
+                    }
+                    editar();
+
+
+                }
+            }
+
+
         });
     });
 
