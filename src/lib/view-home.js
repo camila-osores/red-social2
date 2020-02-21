@@ -42,6 +42,12 @@ export function home() {
         <div  id="posteos">
         </div>
     </div>
+    <!------------ Footer ----------->
+	    <footer>
+	        <p>
+		    Copyright 2020 Diseño y desarrollo por Camila Osores.
+	        </p>
+	    </footer>
     `
 
 

@@ -59,8 +59,6 @@ function observador() {
             document.getElementById('btn-cerrar').addEventListener("click", cerrar)
 
 
-
-
         } else {
             root.innerHTML = (ingreso());
             document.getElementById('google').addEventListener("click", inicioGoogle);
@@ -165,9 +163,10 @@ function leer_datos() {
                 <button id="btn-eliminar-${doc.id}" class="btns" value =${doc.id}>Eliminar</button>
             </div>
         </div>
+        
+            
         `
-
-            //Reconocer botón eliminar
+                //Reconocer botón eliminar
             window.addEventListener("click", botones)
 
             function botones(e) {
@@ -202,7 +201,8 @@ function leer_datos() {
                 if (e.target.type === "submit" && e.target.textContent === "Editar" && e.target.id === `btn-editar-${doc.id}`) {
                     document.getElementById(doc.id).disabled = false;
                     let id = doc.id
-                        //Editar post
+
+                    //Editar post
                     function editar() {
 
                         document.getElementById('posteos').value = doc.id;
@@ -232,7 +232,6 @@ function leer_datos() {
                                     console.log("El post se ha actualizado con éxito!");
                                 })
                                 .catch(function(error) {
-                                    // The document probably doesn't exist.
                                     console.error("Error updating document: ", error);
                                 });
                         })

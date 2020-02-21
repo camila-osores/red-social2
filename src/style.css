@@ -164,6 +164,8 @@ header label .icono:hover {
 }
 
 .btns-container {
+    /* margin-top: -30px; */
+    margin-bottom: 40px;
     display: flex;
 }
 
@@ -187,4 +189,64 @@ header label .icono:hover {
     cursor: pointer;
     color: #323676;
     background-color: rgb(238, 234, 226);
+}
+
+
+/****** Footer *******/
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #323676;
+    z-index: 4;
+}
+
+footer p {
+    font-family: 'PT Sans', sans-serif;
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+
+/* Responsive para celular */
+
+@media (max-width:700px) {
+    /* Página de home */
+    .title {
+        display: none;
+    }
+    header label .icono {
+        display: block;
+        color: #FFF;
+    }
+    .menu {
+        position: absolute;
+        background: #323676;
+        width: 50%;
+        margin-left: -50%;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        z-index: 4;
+    }
+    .menu ul {
+        flex-direction: column;
+    }
+    .menu li {
+        text-align: left;
+        border-top: 1px solid #FFF;
+    }
+    #btn-menu:checked~.menu {
+        margin: 0;
+    }
+    footer p {
+        text-align: center;
+    }
 }
