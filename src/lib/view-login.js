@@ -7,9 +7,6 @@ export function ingreso() {
     return `
       <div class="container">
       <div class="login">
-        <div class="logo">
-          <img src="/img/logo.png">
-        </div>
         <h1>Ingresa a TipsTech</h1>
         <input id="email2" class="datos" type="email" placeholder="Correo electrónico" required>
         <input id="pass2" class="datos" type="password" placeholder="********" required>
