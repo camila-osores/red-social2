@@ -4,7 +4,7 @@
 
 Tips Tech es una red social en donde podrás encontrar y compartir tips de ofertas en productos tecnológicos que ofrece el mercado hoy en día a través de internet.
 
-Para visitar la página [Haz click aquí](https://tipstech-c6fe7.firebaseapp.com/#/Inicio)
+Para visitar la página [Haz click aquí](https://red-social-ea076.firebaseapp.com/)
 
 ## Índice
 
