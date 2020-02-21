@@ -386,8 +386,6 @@ function leer_datos() {
         })
 
 
-
-
     });
 
 }

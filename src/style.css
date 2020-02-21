@@ -21,6 +21,11 @@ body {
     background-repeat: no-repeat;
 }
 
+.logo {
+    width: 30%;
+    height: 70%;
+}
+
 .login {
     display: flex;
     flex-direction: column;
